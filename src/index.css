@@ -5,9 +5,36 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  min-height: 100vh;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root{
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+*{
+  box-sizing: inherit;
+}
+html{
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+@media only screen and (max-width:739px){
+  html{
+    font-size: 30.5%;
+    box-sizing: border-box;
+  }
+}
+@media only screen and (min-width:740px) and (max-width:1023px){
+  html{
+    font-size: 50%;
+    box-sizing: border-box;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+.h_100{
+  height: 100%;
 }
