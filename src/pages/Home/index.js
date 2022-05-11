@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import OutStanding from '~/outstanding';
+import Nomination from '../nominations';
 import './index.css';
-const index = () => {
+import NomitationMovie from './nomitationMovies';
+const Home = () => {
+
+
+  const {pathname} = useLocation();
+  useEffect(()=>{
+      window.scrollTo(0,0);
+  },[pathname]);
+
+  
   return (
-    <div>
-      
+    <div className='home-container'>
+        <div className='grid wide'>
+          <div className='home'>
+              <div className='home-title'>
+                <span>Kasuga.com</span>
+              </div>
+              <Nomination />
+              <NomitationMovie />
+              <OutStanding />
+          </div>
+        </div>
     </div>
   )
 }
 
-export default index
+export default Home

@@ -28,10 +28,10 @@ const Header = () => {
                 </div>
                 <div className='col c-0 m-0 l-3'>
                     <div className='head-auth'>
-                        <Link className='head-auth-link' to='/'>
+                        <Link className='head-auth-link' to='/register'>
                             <span>Đăng Ký</span>
                         </Link>
-                        <Link className='head-auth-link' to='/'>
+                        <Link className='head-auth-link' to='/login'>
                             <span>Đăng Nhập</span>
                         </Link>
                     </div>
