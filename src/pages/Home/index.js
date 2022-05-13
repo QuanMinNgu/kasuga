@@ -4,7 +4,7 @@ import OutStanding from '~/outstanding';
 import Nomination from '../nominations';
 import './index.css';
 import NomitationMovie from './nomitationMovies';
-const Home = () => {
+const Home = ({cache}) => {
 
 
   const {pathname} = useLocation();
@@ -21,8 +21,8 @@ const Home = () => {
                 <span>Kasuga.com</span>
               </div>
               <Nomination />
-              <NomitationMovie />
-              <OutStanding />
+              <NomitationMovie cache={cache} />
+              <OutStanding cache={cache}/>
           </div>
         </div>
     </div>

@@ -6,7 +6,7 @@ import Categary from '~/outstanding/categary';
 import OrderKind from './orderKind';
 import TabCardDEtail from '~/outstanding/tab/tabCard/card';
 import Pagination from '~/pagination';
-const MovieKind = () => {
+const MovieKind = ({cache}) => {
 
   const {slug,kind} = useParams();
   const {pathname} = useLocation();
@@ -50,7 +50,7 @@ const MovieKind = () => {
                     </div>
               </div>
               <div className='col c-3 m-3 l-3'>
-                <Categary />
+                <Categary cache={cache}/>
               </div>
             </div>
         </div>

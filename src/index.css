@@ -38,3 +38,6 @@ html {
 .h_100{
   height: 100%;
 }
+title{
+  text-transform: capitalize;
+}

@@ -6,7 +6,7 @@ import Categary from '~/outstanding/categary';
 import TabCardDEtail from '~/outstanding/tab/tabCard/card';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Pagination from '~/pagination';
-const TypeMovie = () => {
+const TypeMovie = ({cache}) => {
 
     const {slug} = useParams();
 
@@ -51,7 +51,7 @@ const TypeMovie = () => {
                     </div>
                 </div>
                 <div className='col c-3 m-3 l-3'>
-                    <Categary />
+                    <Categary cache={cache}/>
                 </div>
             </div>
         </div>

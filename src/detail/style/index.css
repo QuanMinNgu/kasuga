@@ -68,7 +68,7 @@
 .detail-movie-viet{
     width: 100%;
     font-size: 2rem;
-    height: 6rem;
+    max-height: 6rem;
     overflow: hidden;
     color:#FF9606;
     font-weight: 700;

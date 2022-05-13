@@ -5,10 +5,17 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Categary from '~/outstanding/categary';
 import DeeperDetail from './deeperDetail';
 import Comment from './comment';
-const Detail = () => {
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { isFailing, isLoading, isSuccess } from '~/redux/slice/auth';
+const Detail = ({cache}) => {
 
     const {pathname} = useLocation();
     const trailer = useRef();
+
+    const dispatch = useDispatch();
+
+    const [movie,setMovie] = useState('');
 
     const {slug} = useParams();
 
@@ -16,6 +23,26 @@ const Detail = () => {
         window.scrollTo(0,0);
     },[pathname]);
 
+    useEffect(() => {
+        let here = true;
+        const url = `/product/one/${slug}`;
+        dispatch(isLoading());
+        axios.get(url)  
+            .then(res => {
+                if(!here){
+                    dispatch(isSuccess());
+                    return;
+                }
+                setMovie(res.data.product);
+                dispatch(isSuccess());
+            })
+            .catch(er => {
+                dispatch(isFailing());
+            })
+        return () => {
+            here = false;
+        }
+    },[slug]);
     
 
 
@@ -23,22 +50,22 @@ const Detail = () => {
     <div className='detail-container'>
         <HelmetProvider>
             <Helmet>
-                <title>Xem Phim Tề Thiên Đại Thánh</title>
+                <title>Xem Phim {`${movie?.viet}`}</title>
             </Helmet>
         </HelmetProvider>
         <div className='grid wide'>
             <div className='row'>
                 <div className='col c-9 m-9 l-9'>
-                    <DeeperDetail trailer={trailer}/>
+                    <DeeperDetail trailer={trailer} movie={movie}/>
                     <div className='detail-navbar'>
                         <div className='detail-navbar-container'>
                             <span>NỘI DUNG PHIM</span>
                         </div>
                     </div>
                     <div className='detail-movie-content'>
-                        <span>Shikimori-san Không Chỉ Dễ Thương Thôi Đâu - Kawaii dake ja Nai Shikimori-san cậu nam sinh trung học Izumi là một người xui xẻo bẩm sinh, nhưng anh lại may mắn khi có được cô bạn gái cùng lớp xinh đẹp và dễ thương là Shikimori. Mỗi khi cậu bạn trai Izumi gặp rắc rối, thì cô lại trở thành một người bạn gái ngầu lòi giải cứu Izumi. Câu chuyện cũng kể về cuộc sống thường ngày và đầy dễ thương giữa cặp đôi và những người bạn thân.</span>
+                        <span>{movie?.description}</span>
                         <div className='detail-movie-content-img'>
-                            <img src="https://toigingiuvedep.vn/wp-content/uploads/2021/06/anh-gai-xinh-deo-kinh-cuoi-duyen.jpg" />
+                            <img src={movie?.image} />
                         </div>
                     </div>
                     <div ref={trailer} className='detail-navbar'>
@@ -47,7 +74,7 @@ const Detail = () => {
                         </div>
                     </div>
                     <div className='detail-movie-trailer'>
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/mCHUw7ACS8o" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                        <iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${movie?.trailer}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                     </div>
                     <div className='detail-navbar'>
                         <div className='detail-navbar-container'>
@@ -76,7 +103,7 @@ const Detail = () => {
                     </div>
                 </div>
                 <div className='col c-3 m-3 l-3'>
-                    <Categary />
+                    <Categary cache={cache}/>
                 </div>
             </div>
         </div>

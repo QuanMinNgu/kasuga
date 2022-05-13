@@ -172,3 +172,46 @@
     background-image: linear-gradient(270deg,black,#151D25);
     color:#FF602F;
 }
+.tab_card-title-span{
+    text-transform:capitalize;
+}
+.tab_card-detail-container{
+    position: relative;
+}
+.tab_edit-file{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transition: all ease 0.4s;
+}
+.tab_card-detail-container:hover .tab_edit-file{
+    opacity: 1;
+}
+.tab_edit-file > button{
+    width: 50%;
+    margin:2rem 0;
+    height: 4rem;
+    font-size: 1.8rem;
+    outline: none;
+    cursor: pointer;
+    border-radius: 2rem;
+}
+.tab_edit-file > button:first-child{
+    background-color: red;
+    color:white;
+}
+.tab_edit-file > button:last-child{
+    background-color: green;
+    color:white;
+}
+.tab_edit-file > button:active{
+    transform: scale(1.1);
+}

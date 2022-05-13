@@ -9,11 +9,20 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-
+import { PersistGate } from 'redux-persist/integration/react'
+import {store,persistor} from './redux/store';
+import {Provider} from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+axios.defaults.baseURL = 'http://localhost:5001';
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </PersistGate>
+  </Provider>
 );
 

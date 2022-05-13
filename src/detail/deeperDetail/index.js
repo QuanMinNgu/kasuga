@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import {useNavigate} from 'react-router-dom';
-const DeeperDetail = ({trailer}) => {
+const DeeperDetail = ({trailer,movie}) => {
 
     const navigate = useNavigate();
 
@@ -9,14 +9,14 @@ const DeeperDetail = ({trailer}) => {
     }
 
     const handleNavigate = () => {
-        navigate('/watch/slug');
+        navigate(`/watch/${movie?.slug}`);
     }
 
   return (
     <div className='detail'>
         <div className='detail-movie'>
             <div className='detail-movie-image'>
-                <img src="https://www.dungplus.com/wp-content/uploads/2019/12/girl-xinh-1-480x600.jpg" />
+                <img src={movie?.image} />
                 <div className='detail-movie-button'>
                     <button onClick={handleTrigger}><i style={{marginRight:"0.5rem"}} className="fa-brands fa-youtube"></i>Trailer</button>
                     <button onClick={handleNavigate}><i style={{marginRight:"0.5rem"}} className="fa-solid fa-play"></i>Xem Phim</button>
@@ -25,30 +25,34 @@ const DeeperDetail = ({trailer}) => {
             <div className='detail-movie-container'>
                 <div className='detail-movie-viet'>
                     <span>
-                        Nửa Là Đường Mật Nửa Là Đau Thương Nửa Là Đường Mật Nửa Là Đau Thương 
+                        {movie?.viet}
                     </span>
                 </div>
                 <div className='detail-movie-english'>
-                    <span>From Now, Showtime! (2022) | HD | Full VietSub</span>
+                    <span>{movie?.anh} ({movie?.born}) | HD | {movie?.status} VietSub</span>
                 </div>
                 <div className='detail-movie-detail-container'>
                     <div className='detail-movie-status'>
-                        <span>Trạng Thái: <span>Tập 6 Vietsub</span></span>
+                        <span>Trạng Thái: <span>{movie?.status} Vietsub</span></span>
                     </div>
                     <div className='detail-movie-contry'>
-                        <span>Quốc Gia: Việt Nam</span>
+                        <span>Quốc Gia: {movie?.country}</span>
                     </div>
                     <div className='detail-movie-contry'>
-                        <span>Thời Lượng: Việt Nam</span>
+                        <span>Thời Lượng: {movie?.times}</span>
                     </div>
                     <div className='detail-movie-contry'>
-                        <span>Năm Sản Xuất: 2022</span>
+                        <span>Năm Sản Xuất: {movie?.born}</span>
                     </div>
                     <div className='detail-movie-contry'>
-                        <span>Thể Loại: 2022</span>
+                        <span>Thể Loại:
+                            {movie?.kind?.map((item,index) => 
+                                <span> {item?.name}{index == movie?.kind.length - 1 ? '.' :' , '} </span>
+                            )}
+                        </span>
                     </div>
                     <div className='detail-movie-contry'>
-                        <span>Lượt Xem: 2022</span>
+                        <span>Lượt Xem: {movie?.watch}</span>
                     </div>
                     <div className='detail-movie-rating'>
                         <div className='detail-movie-rating-container'>
