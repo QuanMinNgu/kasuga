@@ -6,6 +6,7 @@ import '~/admin/style/index.css';
 import { isFailing, isLoading, isSuccess } from '~/redux/slice/auth';
 import {useDropzone} from 'react-dropzone';
 import CheckForm from './checkForm';
+import {toast} from 'react-toastify';
 
 const EditProduct = ({cache}) => {
 
@@ -38,6 +39,9 @@ const EditProduct = ({cache}) => {
     const [movie,setMovie] = useState('');
     const {slug} = useParams();
     const dispatch = useDispatch();
+
+    const tapRef = useRef();
+    const linkRef = useRef();
 
     useEffect(() => {
         let here = true;
@@ -80,8 +84,60 @@ const EditProduct = ({cache}) => {
     },[]);
 
 
-    const handleEdit = () => {
+    const handleEdit = async () => {
+        let avatar;
+        if(image){
+            const formData = new FormData();
+            formData.append("file",imgRef.current);
+            formData.append("upload_preset","pxpqedfh");
+            dispatch(isLoading());
+            try{
+                const res = await axios.post("https://api.cloudinary.com/v1_1/dqbrxkux1/image/upload",formData);
+                avatar = res.data.url;
+                dispatch(isSuccess());
+            }
+            catch(err){
+                dispatch(isFailing());
+            }
+        }
+        const phimbo = {
+            tap:tapRef.current?.value,
+            link:linkRef.current?.value
+        };
 
+        const phim  = (phimbo?.tap && phimbo?.link) ? [...movie?.phimbo,phimbo] : [...movie?.phimbo];
+        const defaulMovie = {
+            viet:vietRef.current.value.toLowerCase(),
+            anh:anhRef.current.value.toLowerCase(),
+            description:descriptionRef.current.value,
+            trailer:trailerRef.current.value,
+            movie:movieRef.current.value,
+            status:statusRef.current.value,
+            country:countryRef.current.value,
+            born:bornRef.current.value,
+            categary:categaryRef.current.value,
+            times:timeRef.current.value,
+            kind:kindBox,
+            image:avatar,
+            phimbo:phim
+        };
+
+        dispatch(isLoading());
+        try{
+            const res = await axios.put(`/product/update/${slug}`,{
+                ...defaulMovie
+            },{
+                headers:{
+                    token:`Bearer ${auth.user?.accessToken}`
+                }
+            });
+            toast.success(res.data.msg);
+            dispatch(isSuccess());
+        }
+        catch(err){
+            toast.error(err.response.data.msg);
+            dispatch(isFailing());
+        }
     }
 
   return (
@@ -149,17 +205,24 @@ const EditProduct = ({cache}) => {
                         </div>
                         <div className='create-form'>
                             <select ref={categaryRef}>
-                                <option selected={movie?.categary == 'phim-le' ? 'selected' : ''} value='phim-le'>Phim Lẻ</option>
-                                <option selected={movie?.categary == 'phim-bo' ? 'selected' : ''} value='phim-bo'>Phim Bộ</option>
-                                <option selected={movie?.categary == 'phim-chieu-rap' ? 'selected' : ''} value='phim-chieu-rap'>Phim Chiếu Rạp</option>
-                                <option selected={movie?.categary == 'anime' ? 'selected' : ''} value='anime'>Anime</option>
+                                <option selected={movie?.categary === 'phim-le' ? 'selected' : ''} value='phim-le'>Phim Lẻ</option>
+                                <option selected={movie?.categary === 'phim-bo' ? 'selected' : ''} value='phim-bo'>Phim Bộ</option>
+                                <option selected={movie?.categary === 'phim-chieu-rap' ? 'selected' : ''} value='phim-chieu-rap'>Phim Chiếu Rạp</option>
+                                <option selected={movie?.categary === 'anime' ? 'selected' : ''} value='anime'>Anime</option>
                             </select>
                         </div>
+                        {movie?.phimbo?.map(item => 
+                        <div key={item?.tap + movie?.viet} className='create-phim-bo'>
+                            <span>Tập:</span>
+                            <input defaultValue={item?.tap} placeholder='Tập' className='create-number' type='number' />
+                            <input defaultValue={item?.link} className='create-link' type='text' placeholder='Link'/>
+                        </div>
+                        )}
                         {movie?.categary === 'phim-bo' &&
                         <div className='create-phim-bo'>
                             <span>Thêm tập: </span>
-                            <input placeholder='Tập' className='create-number' type='number' />
-                            <input className='create-link' type='text' placeholder='Link'/>
+                            <input ref={tapRef} placeholder='Tập' className='create-number' type='number' />
+                            <input ref={linkRef} className='create-link' type='text' placeholder='Link'/>
                         </div>
                         }
                         <div className='check_form-container'>

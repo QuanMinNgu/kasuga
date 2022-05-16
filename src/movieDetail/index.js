@@ -10,6 +10,10 @@ const MovieMoreDetail = () => {
 
   const {slug} = useParams();
   const [movie,setMovie] = useState("");
+
+  const [movieLink,setMovieLink] = useState("");
+  const [episo,setEpiso] = useState(1);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,6 +36,14 @@ const MovieMoreDetail = () => {
       here = false;
     }
   },[slug]);
+
+
+  const getEpisode = (e) => {
+    if(e == episo){
+      return 'active';
+    }
+  }
+
   return (
     <div className='watch-container'>
       <HelmetProvider>
@@ -49,7 +61,10 @@ const MovieMoreDetail = () => {
                   {movie?.viet}</span>
             </div>
             <div className='watch-movie'>
-                <iframe src={`${movie?.movie}`} width="100%" height="100%" allowFullScreen allow="autoPlay"></iframe>
+                {movie?.categary === 'phim-bo' ? 
+                <iframe src={`${movieLink}` || `${movie?.movie}`} width="100%" height="100%" allowFullScreen allow="autoPlay"></iframe>
+                :
+                <iframe src={`${movie?.movie}`} width="100%" height="100%" allowFullScreen allow="autoPlay"></iframe>}
             </div>
             <div className='watch-title'>
               <span style={{textTransform:"uppercase"}}>{movie?.viet} ({movie?.born})</span>
@@ -60,21 +75,14 @@ const MovieMoreDetail = () => {
               <i style={{marginRight:"0.5rem"}} className="fa-solid fa-tv"></i>Chọn Tập</span>
               </div>
               <div className='watch-epic'>
-                <div className='episodic active'>
-                  1
-                </div>
-                <div className='episodic'>
-                  1
-                </div>
-                <div className='episodic'>
-                  1
-                </div>
-                <div className='episodic'>
-                  1
-                </div>
-                <div className='episodic'>
-                  1
-                </div>
+                {movie?.phimbo.map(item =>
+                  <div key={item?.tap + "asdsd"} onClick={() => {
+                    setEpiso(item?.tap);
+                    setMovieLink(item?.link);
+                  }} className={`episodic ${getEpisode(item?.tap)}`}>
+                    {item?.tap}
+                  </div>
+                )}
             </div>
             </>:
           <div className='watch-episode'>

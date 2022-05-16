@@ -12,7 +12,7 @@ const Tab = ({cache}) => {
       <TabNavbar infor={"PHIM CHIẾU RẠP"} type="phim-chieu-rap"/>
       <TabCard cache={cache} type="phim-chieu-rap"/>
       <TabNavbar infor={"PHIM ANIME"} type="phim-anime"/>
-      <TabCard cache={cache} type="phim-anime"/>
+      <TabCard cache={cache} type="anime"/>
     </div>
   )
 }

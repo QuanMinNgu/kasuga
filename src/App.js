@@ -36,7 +36,7 @@ function App() {
             <Route path='/' exact element={<Home cache={cache}/>} />
               {publicRoutes.map((item,index) => {
                 const Page = item.component;
-                return <Route key={index + "as"} path={item.path} element={<Page cache={cache}/>} />
+                return <Route key={index + "as"} path={item.path} element={item?.admin ? auth.user?.accessToken && <Page cache={cache}/> : <Page cache={cache}/>} />
               })}
           </Routes>
       </div>

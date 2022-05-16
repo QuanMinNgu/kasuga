@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {useNavigate} from 'react-router-dom';
 const DeeperDetail = ({trailer,movie}) => {
 
@@ -16,7 +16,7 @@ const DeeperDetail = ({trailer,movie}) => {
     <div className='detail'>
         <div className='detail-movie'>
             <div className='detail-movie-image'>
-                <img src={movie?.image} />
+                <img src={movie?.image} alt={movie?.viet}/>
                 <div className='detail-movie-button'>
                     <button onClick={handleTrigger}><i style={{marginRight:"0.5rem"}} className="fa-brands fa-youtube"></i>Trailer</button>
                     <button onClick={handleNavigate}><i style={{marginRight:"0.5rem"}} className="fa-solid fa-play"></i>Xem Phim</button>
@@ -47,7 +47,7 @@ const DeeperDetail = ({trailer,movie}) => {
                     <div className='detail-movie-contry'>
                         <span>Thể Loại:
                             {movie?.kind?.map((item,index) => 
-                                <span> {item?.name}{index == movie?.kind.length - 1 ? '.' :' , '} </span>
+                                <span key={index + "adsdas"}> {item?.name}{index === movie?.kind.length - 1 ? '.' :' , '} </span>
                             )}
                         </span>
                     </div>
