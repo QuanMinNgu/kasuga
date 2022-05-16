@@ -15,8 +15,8 @@ import {Provider} from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 const root = ReactDOM.createRoot(document.getElementById('root'));
-//axios.defaults.baseURL = 'http://localhost:5001';
-axios.defaults.baseURL = "https://kasugaweb.herokuapp.com";
+axios.defaults.baseURL = 'http://localhost:5001';
+//axios.defaults.baseURL = "https://kasugaweb.herokuapp.com";
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>

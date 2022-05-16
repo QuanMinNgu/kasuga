@@ -1,9 +1,9 @@
 import React from 'react'
 import '~/pagination/style/index.css';
 import usePagination from '~/useQuery/paginating/usePagination';
-const Pagination = () => {
+const Pagination = ({total,limit}) => {
 
-    const {page,jump,next,prev,activePage,firstArr,lastArr} = usePagination({total:40,limit:4});
+    const {page,jump,next,prev,activePage,firstArr,lastArr} = usePagination({total:total || 10,limit:limit ? limit : 12});
 
   return (
     <div className='pagination-container'>
